@@ -11,6 +11,43 @@
          You can disable that on the server if desired
     -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/babel">
+		const connectSocket = (e) => {
+			var chat = document.querySelector("#chat");
+			var socket = io.connect();
+			
+			socket.on('connect', () =>{
+				console.log('connecting');
+				
+				let user = document.querySelector("#username").value;
+				
+				if(!user){
+					user = 'unknown';
+				}
+				socket.emit('join',{name: user});
+			});
+			socket.on('msg', (data) => { 
+				console.log(data);
+				chat.value += (data.name + " : " + data.msg +  "\n");
+			});
+		};
+		function sendMessage(e){
+			let message = document.querySelector("#message");
+			let name = document.querySelector("#username").value;
+			var socket = io.connect();
+			socket.emit('msgToServer',{msg : message.value, name: name});
+			message.value = "";
+			
+		}
+		const init = () =>{
+			const connect = document.querySelector("#connect");
+			connect.addEventListener('click', connectSocket);		
+			const message = document.querySelector("#send");
+			message.addEventListener('click', sendMessage);
+		};
+		window.onload = init;
+	</script>
 	<style>
 		textarea {
 			display: block;

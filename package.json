@@ -1,0 +1,25 @@
+{
+  "name": "chatserver",
+  "version": "1.0.0",
+  "engines": {
+    "node": "7.1.0",
+    "npm": "3.10.x"
+  },
+  "description": "chatserver",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "author": "Anthony Giallella",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "dependencies": {
+    "socket.io": "^1.7.2"
+  }
+}
