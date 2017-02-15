@@ -13,10 +13,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/babel">
+	
+		const sendMessage = (e, socket) => {
+			let message = document.querySelector("#message");
+			let name = document.querySelector("#username").value;
+			socket.emit('msgToServer',{msg : message.value, name: name});
+			message.value = "";
+		}
 		const connectSocket = (e) => {
-			var chat = document.querySelector("#chat");
 			var socket = io.connect();
-			
+			var chat = document.querySelector("#chat");
+			const message = document.querySelector("#send");
+			const sendHandler = () => sendMessage(e,socket);
+			message.addEventListener('click', sendHandler);
 			socket.on('connect', () =>{
 				console.log('connecting');
 				
@@ -32,19 +41,10 @@
 				chat.value += (data.name + " : " + data.msg +  "\n");
 			});
 		};
-		function sendMessage(e){
-			let message = document.querySelector("#message");
-			let name = document.querySelector("#username").value;
-			var socket = io.connect();
-			socket.emit('msgToServer',{msg : message.value, name: name});
-			message.value = "";
-			
-		}
+
 		const init = () =>{
 			const connect = document.querySelector("#connect");
 			connect.addEventListener('click', connectSocket);		
-			const message = document.querySelector("#send");
-			message.addEventListener('click', sendMessage);
 		};
 		window.onload = init;
 	</script>

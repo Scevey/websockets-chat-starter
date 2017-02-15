@@ -74,11 +74,13 @@ const onMsg = (sock) => {
       socket.emit('msg', { name: data.name, msg: 'use the syntax /roll #d#' });
       return;
     }
-    //finish
+    // finish
     if (data.msg.indexOf('/time') !== -1) {
+		console.log('time');
       const d = new Date();
       const dateString = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
       message = `the time is: ${dateString}`;
+	  console.dir(socket);
       socket.emit('msg', { name: data.name, msg: message });
       return;
     }
@@ -103,8 +105,9 @@ const onMsg = (sock) => {
       socket.emit('msg', { name: data.name, msg: 'invalid command' });
       return;
     }
-    //finish
+    // finish
     if (data.msg === '/help') {
+		console.log('help');
       const commands = ['/time', '/roll', '/me wave', '/me laugh', '/me dance'];
       message = 'Here are the chat commands: ';
       socket.emit('msg', { name: data.name, msg: message });
