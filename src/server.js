@@ -71,17 +71,16 @@ const onMsg = (sock) => {
         return;
       }
 
-      socket.emit('msg', { name: data.name, msg: 'use the syntax /roll #d#' });
+      socket.emit('msg', { name: serverName, msg: 'use the syntax /roll #d#' });
       return;
     }
     // finish
     if (data.msg.indexOf('/time') !== -1) {
-		console.log('time');
+      console.log('time');
       const d = new Date();
-      const dateString = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+      const dateString = `${d.toLocaleTimeString()}`;
       message = `the time is: ${dateString}`;
-	  console.dir(socket);
-      socket.emit('msg', { name: data.name, msg: message });
+      socket.emit('msg', { name: serverName, msg: message });
       return;
     }
     if (data.msg.indexOf('me') !== -1) {
@@ -107,14 +106,14 @@ const onMsg = (sock) => {
     }
     // finish
     if (data.msg === '/help') {
-		console.log('help');
-      const commands = ['/time', '/roll', '/me wave', '/me laugh', '/me dance'];
+      console.log('help');
+      const commands = ['/time', '/roll #d#', '/me wave', '/me laugh', '/me dance'];
       message = 'Here are the chat commands: ';
       socket.emit('msg', { name: data.name, msg: message });
       let i = 0;
       for (i = 0; i < commands.length; i++) {
         message = commands[i];
-        socket.emit('msg', { name: data.name, msg: message });
+        socket.emit('msg', { name: serverName, msg: message });
       }
       return;
     }
