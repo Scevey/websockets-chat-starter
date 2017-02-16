@@ -80,7 +80,7 @@ const onMsg = (sock) => {
       socket.emit('msg', { name: serverName, msg: message });
       return;
     }
-    if (data.msg.indexOf('me') !== -1) {
+    if(data.msg.indexOf('me') !== -1){
       const str = data.msg;
       if (str.indexOf('dance') !== -1) {
         message = `${data.name} dances`;
