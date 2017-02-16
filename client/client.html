@@ -15,10 +15,19 @@
     <script type="text/babel">
 	
 		const sendMessage = (e, socket) => {
-			let message = document.querySelector("#message");
+			let message = document.querySelector("#message").value;
 			let name = document.querySelector("#username").value;
-			socket.emit('msgToServer',{msg : message.value, name: name});
-			message.value = "";
+			if (message == "/Time" || message == "/time"){
+			const d = new Date();
+				const localTime = `${d.toLocaleTimeString()}`;
+				socket.emit('msgToServer',{msg:"/Time", name: name, time: localTime});
+				message ="";
+				return;
+			}else{
+			socket.emit('msgToServer',{msg : message, name: name});
+			message = "";
+			}
+
 		}
 		const connectSocket = (e) => {
 			var socket = io.connect();

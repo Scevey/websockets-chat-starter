@@ -75,11 +75,8 @@ const onMsg = (sock) => {
       return;
     }
     // finish
-    if (data.msg.indexOf('/time') !== -1) {
-      console.log('time');
-      const d = new Date();
-      const dateString = `${d.toLocaleTimeString()}`;
-      message = `the time is: ${dateString}`;
+    if (data.msg.indexOf('/time') !== -1 || data.msg.indexOf('/Time') !== -1) {
+      message = `the time is: ${data.time}`;
       socket.emit('msg', { name: serverName, msg: message });
       return;
     }
@@ -106,7 +103,6 @@ const onMsg = (sock) => {
     }
     // finish
     if (data.msg === '/help') {
-      console.log('help');
       const commands = ['/time', '/roll #d#', '/me wave', '/me laugh', '/me dance'];
       message = 'Here are the chat commands: ';
       socket.emit('msg', { name: data.name, msg: message });
